@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 20px;
+        color: #555;
+        font-weight: 400;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus {
+        border-color: #007bff;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-transform: uppercase;
+        width: 20%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .url-info {
+        margin: 20px 0;
+        font-size: 22px;
+        color: #555;
+        font-weight: 500;
+      }
+      .url-info span {
+        color: #007bff;
+        text-decoration: underline;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .copyBtn {
+        padding: 5px;
+        background-color: red;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .copyBtn::hover {
+        background-color: #f5865d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <h1>Radhe Radhe!</h1> -->
+      <h1>URL Shortener</h1>
+      <% if (locals.shortId) { %>
+      <p class="url-info">
+        URL Generated:
+        <span id="shortUrl"> http://localhost:8005/url/<%= shortId %></span>
+      </p>
+      <button class="copyBtn" onclick="copyToClipboard()">Copy</button>
+      <% } %>
+      <form method="POST" action="/url">
+        <div class="form-group">
+          <label>Enter your Original URL</label>
+          <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required
+          />
+        </div>
+        <button type="submit">Generate</button>
+      </form>
+      <% if (locals.urls) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Sr no.</th>
+            <th>Short Id</th>
+            <th>Redirect URL</th>
+            <th>Total Visits(clicks)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= url.shortId %></td>
+            <td><%= url.redirectUrl %></td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+    <script>
+      function copyToClipboard() {
+        var copyText = document.getElementById("shortUrl").textContent;
+        var tempInput = document.createElement("input");
+        tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+        tempInput.value = copyText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Copied the URL: " + copyText);
+      }
+    </script>
+  </body>
+</html>

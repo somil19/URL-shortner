@@ -1,0 +1,74 @@
+Models:-
+-Models are like a blueprint of our database
+-It's a representation of a specific collection in MongoDB. Like a Person
+-Once you have defined a model, you can create, read, update, and delete documents in the corresponding MongoDB collection.
+-Mongoose allows you to define a schema for your documents. A schema is like a blueprint that defines the structure and data types of your documents within a collection.
+
+Express Router:- (const router = express.Router();)
+-We have a lots of Endpoints in a single file server.js
+-This makes bad experience in code readability as well as code handling
+-Express Router is a way to modularize and organize your route handling code in an Express.js application.
+-Express Router is like a traffic cop for your web server
+-Express Router helps you organize and manage these pages or endpoints
+in your web application. It's like creating separate folders for different types
+of tasks.
+
+Parsing middlewares:-
+1-app.use(bodyParser.json())
+This middleware is used to parse JSON-formatted request bodies. When you send a request with a JSON body (typically with a Content-Type: application/json header), this middleware will parse the JSON and make it available on req.body.
+
+2-app.use(bodyParser.urlencoded({ extended: true }))
+This middleware is used to parse URL-encoded request bodies, which is the format used by HTML forms by default when they are submitted.
+
+Why use bodyParser.urlencoded?
+
+Form Data: When a user submits a form on a webpage, the browser sends the form data in URL-encoded format by default. This middleware helps parse that data so it can be easily accessed in req.body.
+Extended Option: The extended option allows you to choose between two different parsing algorithms:
+extended: false: Uses the querystring library to parse the URL-encoded data, which only supports simple key-value pairs.
+extended: true: Uses the qs library to parse the URL-encoded data, which allows for rich objects and arrays to be encoded into the URL-encoded format.
+
+
+JWT ( JSON Web Token )
+• Definition: JWT is a specific type of token format defined by the JSON Web Token standard (RFC 7519). It is a compact and self-contained means of transmitting information between parties as a JSON object.
+• Structure: JWTs consist of three parts: header, payload, and signature. They are typically encoded andlsigned using cryptographic algorithms.
+• Usage: JWTs are commonly used for authentication and authorization in web applications and APIs. They can store user claims, such as user ID, roles, permissions, and custom data, in a secure and portable format.
+• Statelessness: JWTs are stateless, meaning the server does not need to store session information. This makes them suitable for distributed architectures and
+scalable systems.
+
+JWT Structure :-
+A JWT is composed of three sections separated by dots (. ), following the format header.payload.signature.
+1. Header: Contains metadata about the type of token and the cryptographic algorithms used to secure it. It typically consists of two parts:
+oTyp (Type): Specifies the type of token, usually set to "JWT".
+oAlg (Algorithm): the cryptographic algorithm used to sign the token, such as HMAC SHA256 or RSA.
+
+2. Payload: Contains the claims or statements about the subject (user) and any additional data. It consists of a set of claims that represent assertions about the user, such as their identity, roles, or permissions. Claims are categorized into three types:
+o Reserved Claims: Predefined claims standardized by the JWT specification, such as iss (issuer), sub (subject), aud (audience), exp (expiration time), and iat (issued at).
+o Public Claims: Custom claims defined by the application developer to convey information about the user.
+Private Claims: Custom claims agreed upon by parties that exchange
+o JWTs, not registered or standardized.
+
+3. Signature: Verifies the integrity of the token and ensures that it has not been tampered with during transmission. It's created by taking the encoded header, encoded payload, a secret (for HMAC algorithms), and applying the specified algorithm to generate the signature.
+
+About JWT Functions:-
+jwt.sign():
+• This function is used to generate a new JWT token based on the provided payload and options.
+• It takes three parameters:
+o payload: This is the data you want to include in the token. It can be any JSON object containing user information, metadata, or any other relevant
+data.
+o secretOrPrivateKey: This is the secret key used to sign the token. It can be a string or a buffer containing a secret cryptographic key.
+o options (optional): These are additional options that control the behavior of the token generation process, such as expiration time (expi resin),
+algorithm (algorithm), and more.
+
+jwt.verify():
+• This function is used to verify and decode a JWT token to retrieve the original
+payload.
+• It takes three parameters:
+o token: The JWT token to be verified.
+o secretOrPub1icKey: The secret key or public key used to verify the
+token's signature. If the token was signed using a symmetric algorithm
+(e.g., HMAC), you need to provide the same secret key used to sign the
+token. If it was signed using an asymrnetric algorithm (e.g., RSA), you
+need to provide the public key corresponding to the private key used for
+signing.
+o options (optional): Additional options for verification, such as algorithms
+(algorithms), audience (audience), issuer (issuer), and more.
